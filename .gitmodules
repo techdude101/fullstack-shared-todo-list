@@ -1,0 +1,9 @@
+[submodule "shared-todo-list-frontend"]
+	path = shared-todo-list-frontend
+	url = https://github.com/techdude101/shared-todo-list-frontend.git
+[submodule "shared-todo-list-db"]
+	path = shared-todo-list-db
+	url = https://github.com/techdude101/shared-todo-list-db.git
+[submodule "shared-todo-list-data-service"]
+	path = shared-todo-list-data-service
+	url = https://github.com/techdude101/shared-todo-list-data-service.git

@@ -1,0 +1,64 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: db
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="$$(cat /run/secrets/db-password)" --silent']
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    volumes:
+      - "./shared-todo-list-db/db_scripts/:/docker-entrypoint-initdb.d"
+    environment:
+      - MYSQL_DATABASE=db_todo
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 3306
+      - 33060
+    ports:
+      - 3306:3306
+  dataservice:
+    build:
+      context: shared-todo-list-data-service
+    image: dataservice:1.0.0-dev
+    ports:
+      - 8080:8000
+    links:
+      - "db:database"
+    environment:
+      - IS_PRODUCTION=true
+      - USE_WSGI=true
+      - MYSQLDB_HOST=database
+      - MYSQLDB_DB=db_todo
+      - MYSQLDB_USER=todo_user
+      - MYSQLDB_PASSWORD=<changeme>
+  frontend: 
+    build:
+      context: shared-todo-list-frontend
+      args:
+        API_URL: http://<host>/api
+        USER_ID: 1
+    image: frontend:1.0.0-dev
+    container_name: frontend
+    ports:
+      - 8000:80
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    volumes:
+      - ./proxy/nginx-dev.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    depends_on:
+      dataservice:
+        condition: service_started
+      frontend:
+        condition: service_started
+    ports:
+      - 80:80
+      - 443:443
+secrets:
+  db-password:
+    file: db_password.txt
