@@ -29,7 +29,7 @@ services:
     links:
       - "db:database"
     environment:
-      - IS_PRODUCTION=true
+      - IS_PRODUCTION=false
       - USE_WSGI=true
       - MYSQLDB_HOST=database
       - MYSQLDB_DB=db_todo
@@ -39,7 +39,7 @@ services:
     build:
       context: shared-todo-list-frontend
       args:
-        API_URL: http://<host>/api
+        API_URL: http://localhost/api
         USER_ID: 1
     image: frontend:1.0.0-dev
     container_name: frontend

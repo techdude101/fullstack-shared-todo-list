@@ -32,9 +32,9 @@ services:
       - MYSQLDB_HOST=database
       - MYSQLDB_DB=db_todo
       - MYSQLDB_USER=todo_user
-      - MYSQLDB_PASSWORD=<changeme>
+      - MYSQLDB_PASSWORD=<changeme_todo_user>
   frontend: 
-    image: td1011/stl-frontend:1.0.0-demo
+    image: td1011/stl-frontend:1.1.0-demo
     container_name: frontend
     ports:
       - 8000:80
@@ -43,8 +43,10 @@ services:
     container_name: proxy
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./proxy/useragents.rules:/etc/nginx/useragents.rules:ro
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
+      - /opt/nginx/logs:/var/log/nginx:rw
     restart: always
     ports:
       - 80:80
