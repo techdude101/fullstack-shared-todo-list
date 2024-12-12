@@ -19,14 +19,16 @@ Demo Site: https://stl-demo.techdude101.com
 
 
 ## Quickstart
+`git clone --recursive https://github.com/techdude101/fullstack-shared-todo-list.git`  
+
 ### Development
 `docker-compose -f docker-compose-dev.yaml up -d`  
 
 URLs:  
-- [frontend via nginx](http://localhost)
-- [dataservice via nginx](http://localhost/api)
-- [frontend](http://localhost:8000)
-- [dataservice](http://localhost:8080)
+- [frontend via nginx](http://localhost)  
+- [dataservice via nginx](http://localhost/api/)  
+- [frontend](http://localhost:8000)  
+- [dataservice](http://localhost:8080)  
 
 ### Demo
 1. Change the DB password for the root user in file:
