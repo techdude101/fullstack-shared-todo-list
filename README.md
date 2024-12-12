@@ -10,7 +10,7 @@ Demo Site: https://stl-demo.techdude101.com
   - Web Components
 - Backend
   - Microservice - data service
-  - Microservice - authentication & authorization service
+  - Microservice - authentication & authorization service (coming soon)
   - Database - MySQL
 - Proxy / Load Balancer
   - NGINX
@@ -51,5 +51,5 @@ URLs:
   ssl_certificate     /etc/nginx/ssl/live/<your domain name>/fullchain.pem;
   ssl_certificate_key /etc/nginx/ssl/live/<your domain name>/privkey.pem;
   ```
-3. Create & start the containers  
+4. Create & start the containers  
 `docker-compose -f docker-compose-demo.yaml up -d`  
